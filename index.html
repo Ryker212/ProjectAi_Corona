@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Styled Form with Radio Buttons</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body class="bg-gray-100 flex items-center justify-center h-screen">
+  <div class="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
+    <h2 class="text-2xl font-semibold mb-6 text-center">เลือกอาการ</h2>
+    
+    <form id="symptomForm">
+      
+      <div class="mb-4 flex" id="symptomForm">
+        <span class="block mb-2 text-gray-700 p-1 font-bold">อาการไอ : </span>
+        <div class="flex items-center mb-2 p-1">
+          <input id="cough" type="radio" name="cough" value=true class="mr-2 h-4 w-4 text-blue-500 focus:ring-blue-500" checked>
+          <label for="thai-food" class="text-gray-700" >มีอาการ</label>
+        </div>
+        <div class="flex items-center mb-2 p-1">
+          <input id="cough" type="radio" name="cough" value=false class="mr-2 h-4 w-4 text-blue-500 focus:ring-blue-500">
+          <label for="japanese-food" class="text-gray-700" >ไม่มีอาการ</label>
+        </div>
+      </div>
+      <div class="mb-4 flex">
+        <span class="block mb-2 text-gray-700 p-1 font-bold">อาการไข้ขึ้น : </span>
+        <div class="flex items-center mb-2 p-1">
+          <input id="fever" type="radio" name="fever" value=true class="mr-2 h-4 w-4 text-blue-500 focus:ring-blue-500" checked>
+          <label for="thai-food" class="text-gray-700" >มีอาการ</label>
+        </div>
+        <div class="flex items-center mb-2 p-1">
+          <input id="fever" type="radio" name="fever" value=false class="mr-2 h-4 w-4 text-blue-500 focus:ring-blue-500">
+          <label for="japanese-food" class="text-gray-700">ไม่มีอาการ</label>
+        </div>
+      </div>
+      <div class="mb-4 flex">
+        <span class="block mb-2 text-gray-700 p-1 font-bold">อาการเจ็บคอ : </span>
+        <div class="flex items-center mb-2 p-1">
+          <input id="throat" type="radio" name="throat" value=true class="mr-2 h-4 w-4 text-blue-500 focus:ring-blue-500" checked>
+          <label for="thai-food" class="text-gray-700" >มีอาการ</label>
+        </div>
+        <div class="flex items-center mb-2 p-1">
+          <input id="throat" type="radio" name="throat" value=false class="mr-2 h-4 w-4 text-blue-500 focus:ring-blue-500">
+          <label for="japanese-food" class="text-gray-700">ไม่มีอาการ</label>
+        </div>
+      </div>
+      <div class="mb-4 flex">
+        <span class="block mb-2 text-gray-700 p-1 font-bold">หายใจไม่สะดวก : </span>
+        <div class="flex items-center mb-2 p-1">
+          <input id="breath" type="radio" name="breath" value=true class="mr-2 h-4 w-4 text-blue-500 focus:ring-blue-500" checked>
+          <label for="thai-food" class="text-gray-700">มีอาการ</label>
+        </div>
+        <div class="flex items-center mb-2 p-1">
+          <input id="breath" type="radio" name="breath" value=false class="mr-2 h-4 w-4 text-blue-500 focus:ring-blue-500">
+          <label for="japanese-food" class="text-gray-700">ไม่มีอาการ</label>
+        </div>
+      </div>
+      <div class="mb-4 flex">
+        <span class="block mb-2 text-gray-700 p-1 font-bold">ปวดหัว : </span>
+        <div class="flex items-center mb-2 p-1">
+          <input id="headache" type="radio" name="headache" value=true class="mr-2 h-4 w-4 text-blue-500 focus:ring-blue-500" checked>
+          <label for="thai-food" class="text-gray-700">มีอาการ</label>
+        </div>
+        <div class="flex items-center mb-2 p-1">
+          <input id="headache" type="radio" name="headache" value=false class="mr-2 h-4 w-4 text-blue-500 focus:ring-blue-500">
+          <label for="japanese-food" class="text-gray-700">ไม่มีอาการ</label>
+        </div>
+      </div>
+
+
+      <div class="flex justify-center">
+        <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
+          ยืนยัน
+        </button>
+      </div>
+
+      
+    </form>
+  </div>
+  <script>
+    document.getElementById('symptomForm').addEventListener('submit', function(event) {
+      event.preventDefault(); // Prevent page refresh
+
+      const cough = document.querySelector('input[name="cough"]:checked').value;
+      const fever = document.querySelector('input[name="fever"]:checked').value;
+      const throat = document.querySelector('input[name="throat"]:checked').value;
+      const breath = document.querySelector('input[name="breath"]:checked').value;
+      const headache = document.querySelector('input[name="headache"]:checked').value;
+
+      // Send data to API
+      fetch('https://api.example.com/submit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          cough: cough,
+          fever: fever,
+          throat: throat,
+          breath: breath,
+          headache: headache
+        })
+      })
+      .then(response => response.json())
+      
+      .then(data => {
+        // Show SweetAlert when the data is submitted successfully
+        Swal.fire({
+          icon: 'success',
+          title: 'ผลการตรวจเบื้องต้น!',
+          text: response,
+          confirmButtonText: 'ตกลง'
+        });
+      })
+      .catch(error => {
+        // Show SweetAlert if there's an error
+        Swal.fire({
+          icon: 'error',
+          title: 'เกิดข้อผิดพลาด!',
+          text: 'กรุณาลองใหม่อีกครั้ง',
+          confirmButtonText: 'ตกลง'
+        });
+      });
+    });
+  </script>
+</body>
+</html>
